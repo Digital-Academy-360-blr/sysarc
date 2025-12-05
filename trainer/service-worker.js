@@ -1,34 +1,45 @@
-const CACHE_NAME = 'da360-trainer-v1';
-const urlsToCache = [
-  '/trainer/',
-  '/trainer/index.html',
-  '/trainer/manifest.json'
+const CACHE_NAME = 'da360-trainer-v3';
+const CACHE_URLS = [
+  './index.html',
+  './manifest.json',
+  'https://da360.vercel.app/images/logo.svg'
 ];
 
 self.addEventListener('install', event => {
+  console.log('[SW Trainer] Installing v3');
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-      .catch(err => console.log('Cache install error:', err))
+      .then(cache => cache.addAll(CACHE_URLS))
+      .catch(err => console.error('[SW Trainer] Cache failed:', err))
   );
   self.skipWaiting();
 });
 
 self.addEventListener('fetch', event => {
-  const request = event.request;
+  const { request } = event;
+  const url = new URL(request.url);
 
-  // Skip non-GET requests
   if (request.method !== 'GET') {
     return;
   }
 
-  // Skip API calls (let them go to network)
-  if (request.url.includes('script.google.com')) {
+  // NEVER cache API calls - always fresh from Google Apps Script
+  if (url.hostname.includes('script.google.com') || 
+      url.hostname.includes('script.googleusercontent.com')) {
+    event.respondWith(
+      fetch(request, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache'
+        }
+      })
+    );
     return;
   }
 
-  // Network-first for navigation requests
-  if (request.mode === 'navigate') {
+  // Network-first for HTML pages
+  if (request.mode === 'navigate' || request.destination === 'document') {
     event.respondWith(
       fetch(request)
         .then(response => {
@@ -38,34 +49,29 @@ self.addEventListener('fetch', event => {
           }
           return response;
         })
-        .catch(() => {
-          return caches.match('/trainer/index.html')
-            .then(cached => cached || new Response('Offline'));
-        })
+        .catch(() => caches.match('./index.html')
+          .then(cached => cached || new Response('Offline')))
     );
     return;
   }
 
-  // Cache-first for other requests
+  // Cache-first for static resources
   event.respondWith(
     caches.match(request)
-      .then(cached => {
-        if (cached) {
-          return cached;
-        }
-        return fetch(request).then(response => {
+      .then(cached => cached || fetch(request)
+        .then(response => {
           if (response.ok) {
             const clone = response.clone();
             caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
           }
           return response;
-        });
-      })
+        }))
       .catch(() => new Response('Network error'))
   );
 });
 
 self.addEventListener('activate', event => {
+  console.log('[SW Trainer] Activating v3');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
@@ -78,4 +84,13 @@ self.addEventListener('activate', event => {
     })
   );
   self.clients.claim();
+});
+
+self.addEventListener('message', event => {
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+  if (event.data === 'CLEAR_CACHE') {
+    caches.delete(CACHE_NAME);
+  }
 });

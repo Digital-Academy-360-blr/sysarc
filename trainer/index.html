@@ -254,6 +254,82 @@
       color: #991b1b;
       border: 1px solid #fecaca;
     }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0.75rem;
+      }
+
+      .card {
+        padding: 1rem;
+      }
+
+      .batch-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .batch-card {
+        padding: 1rem;
+      }
+
+      .batch-title {
+        font-size: 1.1rem;
+      }
+
+      .batch-info {
+        font-size: 0.8rem;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .student-table {
+        font-size: 0.875rem;
+      }
+
+      .student-table th,
+      .student-table td {
+        padding: 0.5rem;
+      }
+
+      .module-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+
+      form .btn {
+        width: 100%;
+      }
+
+      .header {
+        padding: 0.75rem;
+      }
+
+      .logo-container div {
+        font-size: 1.25rem !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .btn {
+        padding: 0.625rem 1rem;
+        font-size: 0.875rem;
+      }
+
+      .student-table {
+        font-size: 0.8rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -370,7 +446,7 @@
   </div>
 
   <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbw4pJXkrMKl_bAPC6DObaaKOuJzD8pdKcVJcx8FwYznqcnT-wO7cakZNuD9u0cAW3A/exec';
+    const API_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
     let currentUser = null;
     let currentBatchID = null;
     let currentModuleID = null;
