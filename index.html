@@ -1,116 +1,364 @@
-```html
-
-
-
-  
-  
-  DA360 - Digital Academy 360
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DA360 - Digital Academy 360 Training Management System">
+  <meta name="theme-color" content="#dc2626">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <title>DA360 - Digital Academy 360</title>
+  <link rel="icon" href="https://github.com/anushkk908/webinar/blob/main/logo%20(1).png?raw=true">
+  <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
       min-height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
       color: white;
+      overflow-x: hidden;
     }
-    .container {
-      text-align: center;
+
+    .header {
       padding: 2rem;
-      max-width: 800px;
+      text-align: center;
+      animation: fadeInDown 0.8s ease-out;
     }
-    .logo {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 2rem;
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-    }
-    h1 {
-      font-size: 3rem;
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
       margin-bottom: 1rem;
     }
-    p {
-      font-size: 1.25rem;
-      margin-bottom: 3rem;
-      opacity: 0.9;
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      background: white;
+      border-radius: 20px;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      animation: float 3s ease-in-out infinite;
     }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .tagline {
+      font-size: 1.5rem;
+      opacity: 0.95;
+      font-weight: 300;
+      margin-bottom: 3rem;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
     .portals {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      animation: fadeInUp 1s ease-out;
     }
+
     .portal-card {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 16px;
-      padding: 2rem;
+      border-radius: 20px;
+      padding: 3rem 2rem;
       text-decoration: none;
       color: white;
-      transition: all 0.3s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+
+    .portal-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
     .portal-card:hover {
       background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 255, 255, 0.4);
     }
+
+    .portal-card:hover::before {
+      opacity: 1;
+    }
+
     .portal-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      display: block;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
     }
+
     .portal-title {
-      font-size: 1.5rem;
-      font-weight: bold;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .portal-desc {
+      font-size: 1rem;
+      opacity: 0.9;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .features {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3rem 2rem;
+      margin-top: 4rem;
+      animation: fadeIn 1.2s ease-out;
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      font-weight: 700;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-item {
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 600;
       margin-bottom: 0.5rem;
     }
-    .portal-desc {
-      font-size: 0.9rem;
+
+    .feature-text {
+      opacity: 0.85;
+      line-height: 1.6;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.2);
+      font-size: 0.95rem;
       opacity: 0.8;
     }
-  
 
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  
-    
-      
-    
-    
-    DA360
-    Digital Academy 360 - Training Management System
-    
-    
-      
-        👨‍🎓
-        Student Portal
-        Attendance & Learning
-      
-      
-      
-        👨‍🏫
-        Trainer Portal
-        Batch Management
-      
-      
-      
-        ⚙️
-        Admin Portal
-        System Management
-      
-    
-    
-    
-      © 2025 Digital Academy 360. All rights reserved.
-    
-  
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-```
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .tagline {
+        font-size: 1.2rem;
+      }
+
+      .logo {
+        width: 80px;
+        height: 80px;
+      }
+
+      .portals {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .portal-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .features h2 {
+        font-size: 2rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid rgba(34, 197, 94, 0.5);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo-container">
+      <img src="https://github.com/anushkk908/webinar/blob/main/logo%20(1).png?raw=true" alt="DA360 Logo" class="logo">
+    </div>
+    <h1>DA360</h1>
+    <div class="tagline">Digital Academy 360 - Training Management System</div>
+    <div class="status-badge">✓ System Online</div>
+  </div>
+
+  <div class="container">
+    <div class="portals">
+      <a href="./student/" class="portal-card">
+        <span class="portal-icon">👨‍🎓</span>
+        <div class="portal-title">Student Portal</div>
+        <div class="portal-desc">
+          Mark attendance with geolocation<br>
+          Track your progress<br>
+          View notifications
+        </div>
+      </a>
+
+      <a href="./trainer/" class="portal-card">
+        <span class="portal-icon">👨‍🏫</span>
+        <div class="portal-title">Trainer Portal</div>
+        <div class="portal-desc">
+          Manage batches<br>
+          Track student attendance<br>
+          Update module progress
+        </div>
+      </a>
+
+      <a href="./admin/" class="portal-card">
+        <span class="portal-icon">⚙️</span>
+        <div class="portal-title">Admin Portal</div>
+        <div class="portal-desc">
+          Complete system control<br>
+          Batch operations<br>
+          Reports & analytics
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="features-container">
+      <h2>System Features</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <span class="feature-icon">📍</span>
+          <div class="feature-title">Geofencing</div>
+          <div class="feature-text">GPS-based attendance verification for offline classes</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🔒</span>
+          <div class="feature-title">Device Binding</div>
+          <div class="feature-text">Secure one-device-per-student authentication</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🔔</span>
+          <div class="feature-title">Real-time Notifications</div>
+          <div class="feature-text">Instant updates for all stakeholders</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📊</span>
+          <div class="feature-title">Analytics Dashboard</div>
+          <div class="feature-text">Comprehensive attendance and progress reports</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🔄</span>
+          <div class="feature-title">Batch Operations</div>
+          <div class="feature-text">Merge, split, and manage batches efficiently</div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📱</span>
+          <div class="feature-title">PWA Support</div>
+          <div class="feature-text">Install as mobile app, works offline</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2025 Digital Academy 360. All rights reserved.</p>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem;">
+      Powered by Google Apps Script & GitHub Pages
+    </p>
+  </div>
+</body>
+</html>
